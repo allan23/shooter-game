@@ -1,16 +1,16 @@
 import Screen from './screen/screen'
-import Enemy from './components/enemy'
-import Player from './components/player'
-import Particle from './components/particle'
 import Handler from './helpers/handler'
+import Level1 from './levels/level-1'
+import Level2 from './levels/level-2'
 
 let screen = new Screen()
 
-let handler = new Handler()
 
-handler.add(new Player(20, 20, 20, 20))
 
-handler.add(new Enemy(20, 20, 200, 200))
+let level = new Level1();
+
+
+
 
 let lastTime = 0
 
@@ -21,7 +21,7 @@ function gameLoop (timestamp) {
   screen.ctx.clearRect(0, 0, 640, 480)
   screen.ctx.fillStyle = '#c0c0c0'
   screen.ctx.fillRect(0, 0, 640, 480)
-  handler.update(deltaTime, screen)
+  level.update(deltaTime, screen)
   requestAnimationFrame(gameLoop)
 }
 

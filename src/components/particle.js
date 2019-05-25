@@ -19,8 +19,9 @@ var Particle = (function (_super) {
     function Particle(width, height, x, y) {
         var _this = _super.call(this, width, height, x, y) || this;
         _this.type = 'particle';
-        _this.color = '#f0f';
-        _this.hasBorder = false;
+        _this.baseColor = '#f0f';
+        _this.altColor = '#fff';
+        _this.border = '#000';
         _this.xMove = 35;
         _this.yMove = 35;
         return _this;
@@ -29,6 +30,24 @@ var Particle = (function (_super) {
         this.position.x += this.xMove / deltaTime;
         this.position.y += this.yMove / deltaTime;
         if (this.collisionDetected) {
+            this.killMe = true;
+        }
+        this.color = (this.color === this.baseColor) ? this.altColor : this.baseColor;
+    };
+    Particle.prototype.update = function (deltaTime, handler) {
+        if (!deltaTime)
+            return;
+        this.move(deltaTime);
+        this.borderCollision();
+        if (!this.immortal) {
+            this.lifeTime--;
+            if (this.lifeTime <= 0) {
+                this.killMe = true;
+            }
+        }
+    };
+    Particle.prototype.collision = function (component) {
+        if (component.type === 'enemy') {
             this.killMe = true;
         }
     };

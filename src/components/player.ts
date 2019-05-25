@@ -1,12 +1,14 @@
 import Component from "./component";
 import Keyboard from "../helpers/keyboard";
 import Particle from "./particle";
+import Handler from "../helpers/handler";
 
 export default class Player extends Component {
     public keyboard: Keyboard;
 
     public type = 'player';
-
+    public xMove = 50;
+    public yMove = 50;
     public shootDelay = 20;
     public currentDelay = 0;
 
@@ -32,7 +34,7 @@ export default class Player extends Component {
         }
     }
 
-    update(deltaTime: number) {
+    update(deltaTime: number, handler: Handler) {
 
         if (!deltaTime) return;
         this.maybeShoot(deltaTime);
@@ -47,6 +49,13 @@ export default class Player extends Component {
         }
         if (this.currentDelay !== 0) {
             this.currentDelay--
+        }
+    }
+
+    collision(component: Component) {
+        if (component.type === 'enemy') {
+            this.position.x = 20;
+            this.position.y = 20;
         }
     }
 }

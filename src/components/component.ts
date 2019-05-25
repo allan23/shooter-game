@@ -22,7 +22,7 @@ export default class Component {
 
     public adds: Component[] = [];
 
-    public lifeTime = 30;
+    public lifeTime = 25;
     public immortal = true;
 
     constructor(width: number, height: number, x: number, y: number) {
@@ -35,17 +35,10 @@ export default class Component {
         };
     }
 
-    update(deltaTime: number) {
+    update(deltaTime: number, handler: Handler) {
         if (!deltaTime) return;
 
-        this.move(deltaTime);
-        this.borderCollision();
-        if (!this.immortal) {
-            this.lifeTime--;
-            if (this.lifeTime <= 0) {
-                this.killMe = true;
-            }
-        }
+
     }
 
     move(deltaTime: number) {
@@ -64,7 +57,7 @@ export default class Component {
             this.collisionDetected = true;
         }
 
-        if (this.position.y >= 480 - this.height) {
+        if (this.position.y >= 480 - (this.height + 50)) {
             this.position.y -= 5;
             this.collisionDetected = true;
         }
@@ -90,11 +83,15 @@ export default class Component {
     }
 
     collision(component: Component) {
-        console.log(this.type + ' collided with ' + component.type);
+
     }
 
     setMoves(xMove: number, yMove: number) {
         this.xMove = xMove;
         this.yMove = yMove;
+    }
+
+    destroy(adds: Component[], deltaTime: number) {
+        return adds;
     }
 }

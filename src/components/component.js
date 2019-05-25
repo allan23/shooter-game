@@ -15,7 +15,7 @@ var Component = (function () {
         this.border = '#fff';
         this.hasBorder = true;
         this.adds = [];
-        this.lifeTime = 30;
+        this.lifeTime = 25;
         this.immortal = true;
         this.width = width;
         this.height = height;
@@ -24,17 +24,9 @@ var Component = (function () {
             y: y
         };
     }
-    Component.prototype.update = function (deltaTime) {
+    Component.prototype.update = function (deltaTime, handler) {
         if (!deltaTime)
             return;
-        this.move(deltaTime);
-        this.borderCollision();
-        if (!this.immortal) {
-            this.lifeTime--;
-            if (this.lifeTime <= 0) {
-                this.killMe = true;
-            }
-        }
     };
     Component.prototype.move = function (deltaTime) {
     };
@@ -48,7 +40,7 @@ var Component = (function () {
             this.position.x += 5;
             this.collisionDetected = true;
         }
-        if (this.position.y >= 480 - this.height) {
+        if (this.position.y >= 480 - (this.height + 50)) {
             this.position.y -= 5;
             this.collisionDetected = true;
         }
@@ -69,11 +61,13 @@ var Component = (function () {
         ctx.fillRect(this.position.x - 1, this.position.y - 1, this.width + 2, this.height + 2);
     };
     Component.prototype.collision = function (component) {
-        console.log(this.type + ' collided with ' + component.type);
     };
     Component.prototype.setMoves = function (xMove, yMove) {
         this.xMove = xMove;
         this.yMove = yMove;
+    };
+    Component.prototype.destroy = function (adds, deltaTime) {
+        return adds;
     };
     return Component;
 }());

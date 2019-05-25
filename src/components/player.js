@@ -21,6 +21,8 @@ var Player = (function (_super) {
     function Player(width, height, x, y) {
         var _this = _super.call(this, width, height, x, y) || this;
         _this.type = 'player';
+        _this.xMove = 50;
+        _this.yMove = 50;
         _this.shootDelay = 20;
         _this.currentDelay = 0;
         _this.keyboard = new keyboard_1["default"]();
@@ -40,7 +42,7 @@ var Player = (function (_super) {
             this.position.y += this.yMove / deltaTime;
         }
     };
-    Player.prototype.update = function (deltaTime) {
+    Player.prototype.update = function (deltaTime, handler) {
         if (!deltaTime)
             return;
         this.maybeShoot(deltaTime);
@@ -54,6 +56,12 @@ var Player = (function (_super) {
         }
         if (this.currentDelay !== 0) {
             this.currentDelay--;
+        }
+    };
+    Player.prototype.collision = function (component) {
+        if (component.type === 'enemy') {
+            this.position.x = 20;
+            this.position.y = 20;
         }
     };
     return Player;
