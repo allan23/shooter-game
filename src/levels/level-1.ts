@@ -42,8 +42,9 @@ export default class Level1 extends Level {
 
     update(deltaTime: number, screen: Screen) {
 
-        this.spawnCount -= 1 / deltaTime;
-        if (this.spawnCount <= 0 && this.maxEnemies < this.handler.getEnemyCount()) {
+        this.spawnCount -= 0.025;
+        console.log(this.handler.getEnemyCount());
+        if (this.spawnCount <= 0 && this.maxEnemies >= this.handler.getEnemyCount()) {
             this.spawnEnemy();
             this.spawnCount = this.spawnDelay;
         }

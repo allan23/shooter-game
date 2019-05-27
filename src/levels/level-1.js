@@ -48,8 +48,9 @@ var Level1 = (function (_super) {
         this.handler.add(new enemy_1["default"](20, 20, this.ebX + 10, this.ebY + 10));
     };
     Level1.prototype.update = function (deltaTime, screen) {
-        this.spawnCount -= 1 / deltaTime;
-        if (this.spawnCount <= 0 && this.maxEnemies < this.handler.getEnemyCount()) {
+        this.spawnCount -= 0.025;
+        console.log(this.handler.getEnemyCount());
+        if (this.spawnCount <= 0 && this.maxEnemies >= this.handler.getEnemyCount()) {
             this.spawnEnemy();
             this.spawnCount = this.spawnDelay;
         }
